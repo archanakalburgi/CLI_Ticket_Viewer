@@ -1,0 +1,18 @@
+{
+    "organization": {
+        "url": "https://zccarchanazendeskcom.zendesk.com/api/v2/organizations/1900157033345.json",
+        "id": 1,
+        "name": "Test Organization",
+        "shared_tickets": false,
+        "shared_comments": false,
+        "external_id": null,
+        "created_at": "2021-11-27T14:37:33Z",
+        "updated_at": "2021-11-27T14:37:33Z",
+        "domain_names": [],
+        "details": null,
+        "notes": null,
+        "group_id": null,
+        "tags": [],
+        "organization_fields": {}
+    }
+}

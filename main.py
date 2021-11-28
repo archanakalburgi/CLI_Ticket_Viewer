@@ -21,7 +21,8 @@ class ZenDeskCommandLoop(Cmd):
             ticket_id = parsed_args[0]
             try:
                 ticket = api.get_ticket_detail(ticket_id)
-                print(tabulate(dataclasses.asdict(ticket).items(), tablefmt="plain"))
+                keys = ticket.ticket_detail_display()
+                print(tabulate(keys, tablefmt="grid", maxcolwidths=[None, 80]))
             except Exception as e:
                 print(e)
                 print(
