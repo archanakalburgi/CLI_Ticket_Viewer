@@ -1,4 +1,9 @@
-# 
+# Install
+pyenv install 3.9.1
+pyenv virtualenv 3.9.1 zen-desk
+pyenv local zen-desk
+pip install -r requirements.txt
+
 
 ## Separation of concerns.
 API module encapsulates all the logic to talk to the zendesk API.
