@@ -4,6 +4,10 @@ pyenv virtualenv 3.9.1 zen-desk
 pyenv local zen-desk
 pip install -r requirements.txt
 
+# Update Credentials
+In src/creds.py
+Please update the user credentials
+
 
 ## Separation of concerns.
 API module encapsulates all the logic to talk to the zendesk API.
