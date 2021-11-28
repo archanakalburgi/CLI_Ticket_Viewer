@@ -72,12 +72,6 @@ class MyCmd(Cmd):
         print(tabulate(values, headers=fields, tablefmt="pretty"))
         print(f"Showing page: {api_call.get_current_page_num(self.next_page)}")
 
-
-def parse(arg):
-    "Convert a series of zero or more numbers to an argument tuple"
-    return tuple(map(int, arg.split()))
-
-
 if __name__ == "__main__":
 
     app = MyCmd()
