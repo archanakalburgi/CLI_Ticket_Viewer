@@ -5,8 +5,14 @@ pyenv local zen-desk
 pip install -r requirements.txt
 
 # Update Credentials
-In src/creds.py
+In `src/creds.py`
+
 Please update the user credentials
+
+# Run
+python main.py
+
+A sample run video is here `sample_screencast.mov`
 
 
 ## Separation of concerns.
