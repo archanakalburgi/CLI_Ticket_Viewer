@@ -66,10 +66,12 @@ class MyCmd(Cmd):
         ]
         values = [list(d.display().values()) for d in tickets]
         print(tabulate(values, headers=fields, tablefmt="pretty"))
-        (count, refreshed_at) = api.get_ticket_count()
-        print(
-            f"Showing page: {api.get_current_page_num(self.next_page)}.  10 Tickets/page. There are total of {count} tickets as of {refreshed_at}"
-        )
+        try:
+            (count, refreshed_at) = api.get_ticket_count()
+            print(f"Showing page: {api.get_current_page_num(self.next_page)}.  10 Tickets/page. There are total of {count} tickets as of {refreshed_at}")
+        except Exception as e:
+            print(f"Failed to get meta data, this is not fatal. Will try again on next command")
+            return None
 
 
 if __name__ == "__main__":
