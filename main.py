@@ -11,6 +11,9 @@ class MyCmd(Cmd):
     prompt = "> "
 
     def do_ticket_detail(self, args):
+        """
+        Get ticket details by id
+        """
         parsed_args = args.split(" ")
         if len(parsed_args) == 1:
             ticket_id = parsed_args[0]
@@ -23,6 +26,9 @@ class MyCmd(Cmd):
                 return None
 
     def do_tickets(self, args):
+        """
+        Get tickets 10 at a time
+        """
         page_to_show = None
         parsed_args = args.split(" ")  # todo move this to diff function
         if (
@@ -49,6 +55,9 @@ class MyCmd(Cmd):
             return None
 
     def do_exit(self, args):
+        """
+        Exit the program.
+        """
         raise SystemExit()
 
     def _print_tickets_table(self, tickets):
