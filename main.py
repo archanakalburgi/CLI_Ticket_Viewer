@@ -1,5 +1,7 @@
 from cmd import Cmd
 import dataclasses
+
+import requests
 import api
 from tabulate import tabulate
 
@@ -22,7 +24,9 @@ class ZenDeskCommandLoop(Cmd):
                 print(tabulate(dataclasses.asdict(ticket).items(), tablefmt="plain"))
             except Exception as e:
                 print(e)
-                print("Invalid arguments, to see ticket details please provide a ticket like ticket_detail <id> eg: ticket_detail 1")
+                print(
+                    "Invalid arguments, to see ticket details please provide a ticket like ticket_detail <id> eg: ticket_detail 1"
+                )
 
     def do_tickets(self, args):
         """
@@ -30,7 +34,11 @@ class ZenDeskCommandLoop(Cmd):
         """
         page_to_show = None
         parsed_args = args.split(" ")  # todo move this to diff function
-        if (len(parsed_args) == 1 and parsed_args[0] == "b" and self.previous_page is not None):
+        if (
+            len(parsed_args) == 1
+            and parsed_args[0] == "b"
+            and self.previous_page is not None
+        ):
             page_to_show = self.previous_page
         elif parsed_args[0] == "b" and self.previous_page is None:
             print("No previous page, so getting the 1st page")
@@ -47,7 +55,16 @@ class ZenDeskCommandLoop(Cmd):
                 print("No tickets found. Or something went wrong, todo")
             else:
                 self._print_tickets_table(tickets)
+        except requests.exceptions.RequestException as e:
+            print(f"Problem connecting to the api, please try again in sometime {e}")
+        except KeyError as e:
+            print(
+                f"Unexpected API response, unlikely to fix on re-run, Call the developer {e}"
+            )
         except Exception as e:
+            print(
+                f"Woh! Developer did not think this would happen. Call the developer and show them this"
+            )
             print(e)
 
     def do_exit(self, args):
@@ -73,13 +90,17 @@ class ZenDeskCommandLoop(Cmd):
         print(tabulate(values, headers=fields, tablefmt="pretty"))
         try:
             (count, refreshed_at) = api.get_ticket_count()
-            print(f"Showing page: {api.get_current_page_num(self.next_page)}.  10 Tickets/page. There are total of {count} tickets as of {refreshed_at}")
+            print(
+                f"Showing page: {api.get_current_page_num(self.next_page)}.  10 Tickets/page. There are total of {count} tickets as of {refreshed_at}"
+            )
         except Exception as e:
-            print(f"Failed to get meta data, this is not fatal. Will try again on next command")
+            print(
+                f"Failed to get meta data, this is not fatal. Will try again on next command"
+            )
             return None
 
 
-welcome_string= """ 
+welcome_string = """ 
 Welcome to Zendesk CLI. 
 Available commands:
 -------------------------------------------------------
