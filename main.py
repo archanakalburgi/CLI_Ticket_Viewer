@@ -1,8 +1,8 @@
 from cmd import Cmd
 import requests
-import api
+import src.api as api
 from tabulate import tabulate
-import util
+import src.util as util
 
 
 class ZenDeskCommandLoop(Cmd):

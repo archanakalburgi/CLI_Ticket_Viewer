@@ -1,4 +1,4 @@
-import api
+import src.api as api
 import pytest
 import responses
 from requests.exceptions import HTTPError

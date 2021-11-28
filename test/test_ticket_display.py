@@ -1,4 +1,4 @@
-from ticket import Ticket
+from src.ticket import Ticket
 import responses
 import json
 
