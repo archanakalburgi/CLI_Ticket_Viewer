@@ -1,8 +1,10 @@
 # Install
+```sh
 pyenv install 3.9.1
 pyenv virtualenv 3.9.1 zen-desk
 pyenv local zen-desk
 pip install -r requirements.txt
+```
 
 # Update Credentials
 In `src/creds.py`
