@@ -1,9 +1,8 @@
 from cmd import Cmd
-import dataclasses
-
 import requests
 import api
 from tabulate import tabulate
+import util
 
 
 class ZenDeskCommandLoop(Cmd):
@@ -92,7 +91,7 @@ class ZenDeskCommandLoop(Cmd):
         try:
             (count, refreshed_at) = api.get_ticket_count()
             print(
-                f"Showing page: {api.get_current_page_num(self.next_page)}.  10 Tickets/page. There are total of {count} tickets as of {refreshed_at}"
+                f"Showing page: {util.get_current_page_num(self.next_page)}.  10 Tickets/page. There are total of {count} tickets as of {refreshed_at}"
             )
         except Exception as e:
             print(
