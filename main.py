@@ -1,6 +1,6 @@
 from cmd import Cmd
 import dataclasses
-import api_call
+import api
 from tabulate import tabulate
 
 
@@ -15,7 +15,7 @@ class MyCmd(Cmd):
         if len(parsed_args) == 1:
             ticket_id = parsed_args[0]
             try:
-                ticket = api_call.get_ticket_detail(ticket_id)
+                ticket = api.get_ticket_detail(ticket_id)
                 print(tabulate(dataclasses.asdict(ticket).items(), tablefmt="plain"))
             except Exception as e:
                 print(e)
@@ -37,7 +37,7 @@ class MyCmd(Cmd):
             page_to_show = None
 
         try:
-            (self.previous_page, tickets, self.next_page) = api_call.get_tickets(
+            (self.previous_page, tickets, self.next_page) = api.get_tickets(
                 page_to_show
             )
             if len(tickets) == 0:
@@ -66,9 +66,9 @@ class MyCmd(Cmd):
         ]
         values = [list(d.display().values()) for d in tickets]
         print(tabulate(values, headers=fields, tablefmt="pretty"))
-        (count, refreshed_at) = api_call.get_ticket_count()
+        (count, refreshed_at) = api.get_ticket_count()
         print(
-            f"Showing page: {api_call.get_current_page_num(self.next_page)}.  10 Tickets/page. There are total of {count} tickets as of {refreshed_at}"
+            f"Showing page: {api.get_current_page_num(self.next_page)}.  10 Tickets/page. There are total of {count} tickets as of {refreshed_at}"
         )
 
 

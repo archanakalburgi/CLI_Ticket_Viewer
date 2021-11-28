@@ -1,4 +1,4 @@
-import api_call
+import api
 import pytest
 import responses
 from requests.exceptions import HTTPError
@@ -6,7 +6,7 @@ import json
 
 
 def test_invalid_uri():
-    pytest.raises(Exception, api_call.get_current_page_num, "invalid uri")
+    pytest.raises(Exception, api.get_current_page_num, "invalid uri")
 
 
 @responses.activate
@@ -16,7 +16,7 @@ def test_404_should_not_kill_2():
     )
     pytest.raises(
         HTTPError,
-        api_call.call_zendesk_api,
+        api.call_zendesk_api,
         "https://zccarchanazendeskcom.zendesk.com/",
     )
 
@@ -24,7 +24,7 @@ def test_404_should_not_kill_2():
 @responses.activate
 def test_should_parse_valid_json():
     mock_uri = "https://zccarchanazendeskcom.zendesk.com/"
-    f = open("test_data/test.json", "r")
+    f = open("test/test_data/test.json", "r")
     responses.add(
         responses.GET,
         mock_uri,
@@ -32,14 +32,14 @@ def test_should_parse_valid_json():
         json=json.load(f),
         content_type="application/json",
     )
-    resp = api_call.get_tickets(mock_uri)
+    resp = api.get_tickets(mock_uri)
     len(resp) == 10
 
 
 @responses.activate
 def test_invalid_json_should_not_kill_app():
     mock_uri = "https://zccarchanazendeskcom.zendesk.com/"
-    f = open("test_data/test_invalid.json", "r")
+    f = open("test/test_data/test_invalid.json", "r")
     responses.add(
         responses.GET,
         mock_uri,
@@ -47,4 +47,4 @@ def test_invalid_json_should_not_kill_app():
         json=json.load(f),
         content_type="application/json",
     )
-    pytest.raises(KeyError, api_call.get_tickets, mock_uri)
+    pytest.raises(KeyError, api.get_tickets, mock_uri)
