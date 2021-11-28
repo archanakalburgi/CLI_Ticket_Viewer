@@ -80,6 +80,3 @@ class Ticket:
             ["created_at", self.created_at],
             ["ticket_type", self.__empty_string_if_none(self.ticket_type)]
         ]
-
-
-

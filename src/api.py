@@ -1,7 +1,7 @@
 import requests
 from requests.auth import HTTPBasicAuth
-from src.ticket import Ticket
 from src.creds import EMAIL, TOKEN
+from src.util import _json_dict_to_ticket, _ticket_json_to_tickets
 
 USER_NAME =  EMAIL + "/token"
 PASSWORD = TOKEN
@@ -42,7 +42,7 @@ def get_ticket_detail(ticket_id):
     """
     uri = f"{DOMAIN}/tickets/{ticket_id}.json"
     tt = call_zendesk_api(uri)
-    res = _ticket_to_json(tt["ticket"])
+    res = _json_dict_to_ticket(tt["ticket"])
     return res
 
 
@@ -61,30 +61,3 @@ def get_organization_by_id(org_id):
     uri = f"{DOMAIN}/organizations/{org_id}.json"
     return call_zendesk_api(uri)
 
-
-def _ticket_to_json(ticket):
-    """
-    return: dict
-    """
-    return Ticket(
-        id=ticket["id"],
-        url=ticket["url"],
-        created_at=ticket["created_at"],
-        ticket_type=ticket["type"],
-        subject=ticket["subject"],
-        description=ticket["description"],
-        priority=ticket["priority"],
-        status=ticket["status"],
-        assignee_id=ticket["assignee_id"],
-        organization_id=ticket["organization_id"],
-        tags=ticket["tags"],
-        requester_id=ticket["requester_id"],
-    )
-
-
-def _ticket_json_to_tickets(json_tickets):
-    """
-    return: list of dicts
-    """
-    tickets = [_ticket_to_json(ticket) for ticket in json_tickets["tickets"]]
-    return (json_tickets["previous_page"], tickets, json_tickets["next_page"])
