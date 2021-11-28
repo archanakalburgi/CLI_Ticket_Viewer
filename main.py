@@ -82,8 +82,17 @@ class MyCmd(Cmd):
             print(f"Failed to get meta data, this is not fatal. Will try again on next command")
             return None
 
-
+welcome_string= """ Welcome to Zendesk CLI. 
+Available commands:
+-------------------------------------------------------
+tickets -            to get tickets 10 at a time
+ticket_detail <id> - to get ticket details by id
+-------------------------------------------------------
+Note: 
+1. If user id and organization endpoint is not available, you will see an ID. We try to get that information on every tickets request
+2. Application State is not persisted.
+"""
 if __name__ == "__main__":
 
     app = MyCmd()
-    app.cmdloop("Enter a command to do something. eg `create name price`.")
+    app.cmdloop(welcome_string)
