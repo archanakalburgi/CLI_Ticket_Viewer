@@ -19,12 +19,8 @@ class MyCmd(Cmd):
                 print(tabulate(dataclasses.asdict(ticket).items(), tablefmt="plain"))
             except Exception as e:
                 print(e)
+                print("Invalid arguments, to see ticket details please provide a ticket like ticket_detail <id> eg: ticket_detail 1")
                 return None
-            # print(ticket)
-        else:
-            print(
-                "Invalid arguments, to see ticket details please provide a ticket like ticket_detail <id> eg: ticket_detail 1"
-            )
 
     def do_tickets(self, args):
         page_to_show = None
@@ -70,7 +66,11 @@ class MyCmd(Cmd):
         ]
         values = [list(d.display().values()) for d in tickets]
         print(tabulate(values, headers=fields, tablefmt="pretty"))
-        print(f"Showing page: {api_call.get_current_page_num(self.next_page)}")
+        (count, refreshed_at) = api_call.get_ticket_count()
+        print(
+            f"Showing page: {api_call.get_current_page_num(self.next_page)}.  10 Tickets/page. There are total of {count} tickets as of {refreshed_at}"
+        )
+
 
 if __name__ == "__main__":
 
